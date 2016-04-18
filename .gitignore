@@ -1,0 +1,12 @@
+/.eggs/
+/.idea/
+/build/
+/dist/
+/src/dictionaries.egg-info/
+
+/htmlcov/
+/.coverage
+
+/README.html
+
+*.py[cod]
