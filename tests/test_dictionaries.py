@@ -1,6 +1,4 @@
-from unittest import skip, skipIf, TestCase
-
-import six
+from unittest import skip
 
 from dictionaries import Dict, OrderedDict, FrozenDict, FrozenOrderedDict, ReadonlyDictProxy
 
