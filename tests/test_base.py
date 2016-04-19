@@ -429,6 +429,11 @@ class ImmutableDictTestBase(ReadonlyDictTestBase):
         hash_values = [hash(self._create_dict(permutation)) for permutation in itertools.permutations(items)]
         self.assertEqual(len(set(hash_values)), 1)
 
+    def test_copy_with_no_args_returns_self(self):
+        d = self._create_dict(b=2, c=3)
+        d2 = d.copy()
+        self.assertIs(d, d2)
+
 
 # Excluding all tests from this module since their sole
 # purpose is to be used as base classes in other modules.

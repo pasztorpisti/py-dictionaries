@@ -164,7 +164,7 @@ class FromKeysMixin(object):
         return cls(items)
 
 
-class FrozenDict(FromKeysMixin, ExtendedCopyMixin, ReadonlyDictProxy):
+class FrozenDict(FromKeysMixin, ReadonlyDictProxy):
     __slots__ = ('__hash',)
     __inner_dict__ = dict
 
@@ -172,6 +172,12 @@ class FrozenDict(FromKeysMixin, ExtendedCopyMixin, ReadonlyDictProxy):
         _dict = self.__inner_dict__(*args, **kwargs)
         super(FrozenDict, self).__init__(_dict)
         self.__hash = None
+
+    def copy(self, **update_items):
+        if not update_items:
+            # Taking advantage of being immutable.
+            return self
+        return type(self)(self, **update_items)
 
     def __hash__(self):
         if self.__hash is None:
