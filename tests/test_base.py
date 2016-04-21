@@ -127,13 +127,11 @@ class CommonDictTests(DictInitTests, DictTestCase):
         self.assertEqual(d.items['b'], 2)
         self.assertEqual(d['b'], 2)
 
-        def items_getitem_with_syntactic_sugar(item):
-            return d.items[item]
-        self.assertRaises(KeyError, items_getitem_with_syntactic_sugar, 'a')
+        with self.assertRaises(KeyError):
+            item = d.items['a']
 
-        def getitem_with_syntactic_sugar(item):
-            return d[item]
-        self.assertRaises(KeyError, getitem_with_syntactic_sugar, 'a')
+        with self.assertRaises(KeyError):
+            item = d['a']
 
     def test_copy(self):
         d = self._create_dict(b=2, c=3)
@@ -249,18 +247,17 @@ class MutableDictTestBase(MutableDictStressTests, CommonDictTests):
     def test_delattr(self):
         d = self._create_dict(b=2, c=3)
 
-        def item_delattr_with_syntactic_sugar():
+        with self.assertRaises(AttributeError):
             del d.items.d
-        self.assertRaises(AttributeError, item_delattr_with_syntactic_sugar)
+
         self.assertMappingEqual(d, dict(b=2, c=3))
         del d.items.c
         self.assertMappingEqual(d, dict(b=2))
 
         d = self._create_dict(b=2, c=3)
 
-        def delattr_with_syntactic_sugar():
+        with self.assertRaises(AttributeError):
             del d.d
-        self.assertRaises(AttributeError, delattr_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
         del d.c
         self.assertMappingEqual(d, dict(b=2))
@@ -281,18 +278,16 @@ class MutableDictTestBase(MutableDictStressTests, CommonDictTests):
     def test_delitem(self):
         d = self._create_dict(b=2, c=3)
 
-        def item_delitem_with_syntactic_sugar():
+        with self.assertRaises(KeyError):
             del d.items['d']
-        self.assertRaises(KeyError, item_delitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
         del d.items['c']
         self.assertMappingEqual(d, dict(b=2))
 
         d = self._create_dict(b=2, c=3)
 
-        def delitem_with_syntactic_sugar():
+        with self.assertRaises(KeyError):
             del d['d']
-        self.assertRaises(KeyError, delitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
         del d['c']
         self.assertMappingEqual(d, dict(b=2))
@@ -357,8 +352,8 @@ class ReadonlyDictTestBase(CommonDictTests):
 
     def test_setattr(self):
         d = self._create_dict(b=2, c=3)
-        self.assertRaisesRegexp(AttributeError, r"Item assignment through attribute access isn't supported",
-                                setattr, d.items, 'd', 4)
+        with self.assertRaisesRegexp(AttributeError, r"Item assignment through attribute access isn't supported"):
+            d.items.d = 4
         self.assertMappingEqual(d, dict(b=2, c=3))
 
         try:
@@ -373,40 +368,34 @@ class ReadonlyDictTestBase(CommonDictTests):
     def test_delattr(self):
         d = self._create_dict(b=2, c=3)
 
-        def item_delattr_with_syntactic_sugar():
+        with self.assertRaises(AttributeError):
             del d.items.c
-        self.assertRaises(AttributeError, item_delattr_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
-        def delattr_with_syntactic_sugar():
+        with self.assertRaises(AttributeError):
             del d.c
-        self.assertRaises(AttributeError, delattr_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
     def test_setitem(self):
         d = self._create_dict(b=2, c=3)
 
-        def item_setitem_with_syntactic_sugar():
+        with self.assertRaises(TypeError):
             d.items['d'] = 4
-        self.assertRaises(TypeError, item_setitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
-        def setitem_with_syntactic_sugar():
+        with self.assertRaises(TypeError):
             d['d'] = 4
-        self.assertRaises(TypeError, setitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
     def test_delitem(self):
         d = self._create_dict(b=2, c=3)
 
-        def item_delitem_with_syntactic_sugar():
+        with self.assertRaises(TypeError):
             del d.items['c']
-        self.assertRaises(TypeError, item_delitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
-        def delitem_with_syntactic_sugar():
+        with self.assertRaises(TypeError):
             del d['c']
-        self.assertRaises(TypeError, delitem_with_syntactic_sugar)
         self.assertMappingEqual(d, dict(b=2, c=3))
 
 
