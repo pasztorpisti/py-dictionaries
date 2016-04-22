@@ -207,7 +207,7 @@ these dictionaries are hashable given that all objects inside them are also hash
 ``ReadonlyDictProxy``
 ---------------------
 
-Sometimes you have to pass around some of dictionaries but you want to make sure that no one modifies them. In this
+Sometimes you have to pass around some of your dictionaries but you want to make sure that no one modifies them. In this
 case what you should do is creating a ``ReadonlyDictProxy`` wrapper around your dictionary and passing around the
 wrapper instead of your original wrapped one. The ``ReadonlyDictProxy`` instance will delegate all requests to your
 original dictionary except those requests that involve data modification (like item assignment/deletion, ``update()``,
