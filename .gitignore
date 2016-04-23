@@ -8,5 +8,6 @@
 /.coverage
 
 /README.html
+/CHANGES.html
 
 *.py[cod]
