@@ -3,10 +3,10 @@ CHANGES
 =======
 
 
-Future version
---------------
+v0.0.1
+------
 
-*Release date: future*
+*Release date: 2016-04-23*
 
 - Optimized the ``copy`` method of frozen (immutable) dictionaries: without update arguments ``copy`` returns ``self``.
 
