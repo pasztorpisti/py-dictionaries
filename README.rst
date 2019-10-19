@@ -10,13 +10,9 @@ Python dictionary implementations
     :target: https://travis-ci.org/pasztorpisti/py-dictionaries
     :alt: build
 
-.. image:: https://img.shields.io/codacy/9920e31609734de8815aa995b70b96e7/master.svg?style=flat
+.. image:: https://img.shields.io/codacy/grade/9920e31609734de8815aa995b70b96e7/master.svg?style=flat
     :target: https://www.codacy.com/app/pasztorpisti/py-dictionaries
     :alt: code quality
-
-.. image:: https://landscape.io/github/pasztorpisti/py-dictionaries/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/pasztorpisti/py-dictionaries/master
-    :alt: code health
 
 .. image:: https://img.shields.io/coveralls/pasztorpisti/py-dictionaries/master.svg?style=flat
     :target: https://coveralls.io/r/pasztorpisti/py-dictionaries?branch=master
