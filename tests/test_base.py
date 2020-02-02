@@ -1,8 +1,14 @@
-import collections
 import itertools
 import numbers
 import random
+import sys
 from unittest import TestCase, TestSuite
+
+try:
+    # python 3.3+
+    from collections.abc import Hashable
+except ImportError:
+    from collections import Hashable
 
 import six
 
@@ -12,6 +18,9 @@ class ExtendedTestCase(TestCase):
         # Since our test keys and values are hashable we can use unittest
         # set comparison because it has easy to read diff output.
         self.assertSetEqual(set(m1.items()), set(m2.items()), msg)
+
+    if sys.version_info < (3, 2):
+        assertRaisesRegex = TestCase.assertRaisesRegexp
 
 
 class DictTestCase(ExtendedTestCase):
@@ -213,7 +222,7 @@ class CommonDictTests(DictInitTests, DictTestCase):
         self.assertTrue(d != dict(c=3))
 
     def test_hash(self):
-        self.assertNotIsInstance(self._create_dict(), collections.Hashable)
+        self.assertNotIsInstance(self._create_dict(), Hashable)
 
     def test_str(self):
         s = str(self._create_dict(b=2, c=3))
@@ -352,7 +361,7 @@ class ReadonlyDictTestBase(CommonDictTests):
 
     def test_setattr(self):
         d = self._create_dict(b=2, c=3)
-        with self.assertRaisesRegexp(AttributeError, r"Item assignment through attribute access isn't supported"):
+        with self.assertRaisesRegex(AttributeError, r"Item assignment through attribute access isn't supported"):
             d.items.d = 4
         self.assertMappingEqual(d, dict(b=2, c=3))
 

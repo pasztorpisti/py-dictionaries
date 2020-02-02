@@ -3,8 +3,13 @@ import collections
 import functools
 import operator
 
-__all__ = ['Dict', 'OrderedDict', 'FrozenDict', 'FrozenOrderedDict', 'ReadonlyDictProxy']
+try:
+    # python 3.3+
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
 
+__all__ = ['Dict', 'OrderedDict', 'FrozenDict', 'FrozenOrderedDict', 'ReadonlyDictProxy']
 
 # version_info[0]: Increase in case of large milestones/releases.
 # version_info[1]: Increase this and zero out version_info[2] if you have explicitly modified
@@ -109,7 +114,7 @@ class ReadonlyItemsMixin(object):
         return self.__items
 
 
-class ReadonlyDictProxy(ReadonlyItemsMixin, collections.Mapping):
+class ReadonlyDictProxy(ReadonlyItemsMixin, Mapping):
     __slots__ = ('__dict',)
 
     def __init__(self, wrapped_dict):
